@@ -38,13 +38,21 @@
             max-height: 100%;
             overflow: hidden;
         }
-        .mapboxgl-popup {
-            max-width: 400px;
-            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-        }
         .map-overlay .listing {
             list-style-type: none;
             max-height: 100%;
+        }
+        #results {
+            height:260px;
+            padding: 20px;
+            overflow-y: scroll;
+            font-family: sans-serif;
+            font-size: 1em;
+            line-height: 1.5em;
+            /* overflow: hidden; */
+        }
+        #calcButton {
+            display: none;
         }
     </style>
          
@@ -55,10 +63,10 @@
     <div id="listWithHandle" class="listing"></div>
 
     <!-- then calculate the route -->
-    <button onclick='drawRoute(calcRoute())'>Calculate route</button>
+    <button onclick='drawRoute(calcRoute())' id="calcButton">Calculate route</button>
+    <ol><div id='results'></div></ol>
 </div>
 
-<script src="app.js"></script>
 <script src="map.js"></script>
 <script src="listHandler.js"></script>
 </body>
