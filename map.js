@@ -47,9 +47,8 @@ map.on('load', function () {
 
 function renderListings(id,description,coordinates) {
 	var node = document.createElement("li");
-	
 	node.innerHTML = 	'<div class="list-group-item">' + 
-						'<span class="badge">' + id + '</span>' + 
+						'<div class="remove" onclick="removeListing()"><span class="glyphicon glyphicon-remove-circle"></span></div>' + 
 						'<span class="glyphicon glyphicon-move" aria-hidden="true"></span>' + 
 						'<span class="listing">' + description + '</span>' + 
 						'<div id="feature-listing" class="listing">' + coordinates + '</div></div>';
@@ -57,18 +56,28 @@ function renderListings(id,description,coordinates) {
 	document.getElementById('listWithHandle').appendChild(node);
 }
 
+function removeItem(ev){
+	ev.target.parentNode.parentElement.remove();
+}
+
+function removeListing() {
+	let listings = document.getElementsByTagName('li');
+	for (var i = 0; i < listings.length; i++) {
+			listings[i].addEventListener('click',removeItem,false);
+	}
+}
+
 var pts = document.getElementsByClassName('list-group-item');
 
 function calcRoute() {
 	var waypoints = [];
-
 	for (let i = 0; i < pts.length; i++) {
 		waypoints.push(pts[i].children[3].innerText);		
 	}
 	var coords = waypoints.join(';');
+	document.getElementById("results").style.display='block';
 	return coords;
 }
-
 
 function drawRoute(coords) {
 	let url = 'https://api.mapbox.com/optimized-trips/v1/mapbox/driving/' + coords + '?steps=true&geometries=geojson&access_token=' + mapboxgl.accessToken;
@@ -93,7 +102,6 @@ function drawRoute(coords) {
 	};
 	req.send();
 }
-
 
 // adds the route as a layer on the map
 function addRoute (coords) {
@@ -124,4 +132,3 @@ function addRoute (coords) {
 	  });
 	};
 }
-  
