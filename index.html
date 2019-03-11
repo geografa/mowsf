@@ -2,24 +2,19 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Display a map</title>
+    <title>Optimize drop-off locations</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />    
       <!-- GL JS -->
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"/>
-
-
     <!-- Latest Sortable -->
     <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
-     
-    <style>
-        body { margin:0; padding:0; }
-    </style>
 </head>
 <body>
     <style>
+        body { margin:0; padding:0; }
         #map {
             position:absolute;
             left:25%;
@@ -62,9 +57,7 @@
             right: 15px;
         }
     </style>
-         
 <div id='map'></div>
-    
 <div class='map-overlay'>
     <!-- List with handle -->
     <div id="listWithHandle" class="listing"></div>
@@ -73,7 +66,6 @@
     <button onclick='drawRoute(calcRoute())' id="calcButton">Calculate route</button>
     <ol><div id='results'></div></ol>
 </div>
-
 <script src="map.js"></script>
 <script src="listHandler.js"></script>
 </body>
