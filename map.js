@@ -1,7 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoiZ3JhZmEiLCJhIjoiY2p0MHVkbHA2MDdoZzRhbWoxbWI4bmZhcyJ9.8_IAnHBT5QsM1NhUyEnrUQ';
 var map = new mapboxgl.Map({
     container: 'map', // container id
-    style: 'mapbox://styles/mapbox/light-v9', // stylesheet location
+    style: 'mapbox://styles/grafa/cjt50l55u0ebl1fo2tfkebc2h', // stylesheet MOWSF
     center: [-122.67773866653444,45.52245801087795], // starting position [lng, lat]
     zoom: 11.5 // starting zoom
 });
@@ -16,11 +16,11 @@ map.on('load', function () {
 			},
 			"source-layer": "mowsf",
 			"layout": {
-				"icon-image": "circle-15",
+				"icon-image": "dot-blue",
 				"text-field": "{name}",
 				"text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-				"text-offset": [0, 0.6],
-				"text-anchor": "top"
+				"text-offset": [1, 0],
+				"text-anchor": "left"
 			}
 		});
 	
@@ -108,27 +108,54 @@ function addRoute (coords) {
 	// check if the route is already loaded
 	if (map.getSource('route')) {
 		map.getSource('route').setData(coords);
-	} else{
-	  map.addLayer({
-			"id": "route",
-			"type": "line",
-			"source": {
-				"type": "geojson",
-				"data": {
-					"type": "Feature",
-					"properties": {},
-					"geometry": coords
-				}
+	} else {
+		map.addSource('route', {
+			type: 'geojson',
+			data: {
+				"type": "Feature",
+				"properties": {},
+				"geometry": coords
+			}
+		});
+		map.addLayer({
+			id:'routeline-active',
+			type:'line',
+			source: 'route',
+			layout:{
+				'line-join': 'round',
+				'line-cap': 'round'
 			},
+			paint:{
+				'line-color': '#3887be',
+				'line-width': {
+					base:1,
+					stops:[[12, 3], [22, 12]]
+				}
+			}
+		}, 'waterway-label');
+
+		map.addLayer({
+			"id": "route",
+			"type": "symbol",
+			"source": "route",
 			"layout": {
-				"line-join": "round",
-				"line-cap": "round"
+				"symbol-placement": "line",
+				"text-field": "▶",
+				"text-size": {
+					"base": 1,
+					"stops": [[12, 24], [22, 60]]
+				},
+				"symbol-spacing": {
+					"base": 1,
+					"stops": [[12, 30], [22, 160]]
+				},
+				"text-keep-upright": false
 			},
 			"paint": {
-				"line-color": "#3b9ddd",
-				"line-width": 8,
-				"line-opacity": 0.8
+				"text-color": "#3887be",
+				"text-halo-color": "hsl(55, 11%, 96%)",
+				"text-halo-width": 3
 			}
-	  });
+		}, "waterway-label");
 	};
 }
